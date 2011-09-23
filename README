@@ -1,7 +1,41 @@
 Docs at http://www.jperla.com/blog/write-bug-free-javascript-with-actionable
 
-Accepts spinner url (to an animated gif of a spinner for waits).
-Set up a live listener on divs with classes of type "actionable".
+Goals of Actionable:
+ * so easy that a designer could write complicated AJAX!
+ * 0 lines of javascript
+ * complicated ajax websites
+ * 0 lines of javascript
+ * no bugs
+ * 0 lines of javascript
+ * very fast speed and optimality.
+ * backwards compatibility with clients who have javascript off (this was more important 4 years ago when I first made this)
+
+Plus, you don't even have to write one line of javascript!
+
+The basic idea is that almost every complicated AJAX interaction can be reduced to a handful of fundamental actions which can be composed (remind you of UNIX?). So, all a programmer has to do with this library is add few lines of HTML to elements of a page to describe the Actionable response that happens when someone clicks that element.  Maybe you submit a form, maybe you fetch some content and update part of the page.
+
+Most current website write and rewrite slightly different versions of these same basic patterns in javascript. This separates the HTML which has information about AJAX interactions and the Javascript which has other information.
+
+Javascript can be tricky to write even for an experience programmer.  Moreover, a lot of this stuff is repeated, and it shouldn't be. Actionable brings more of a descriptive style programming (a la Haskell, Prolog) to the web in the simplest of ways.
+
+
+FAQ:
+
+* Couldn't you just write javascript functions that you call that do the same thing?
+
+You might but then you introduce the opportunity of syntax and other programming errors, thus not achieving 0 bugs. In practice, this library is so straightforward to use that once you define a complicated action, which only takes a few seconds, you can move it around and it just always works.
+
+Moreover, it's easier to auto-generate correct readable html (e.g. from Django templates). Many of your pages won't need *any* javascript even if highly dynamic. All the custom logic is in one place rather than spread over the html and the javascript. Basically, writing javascript is harder than what amounts to a DSL in HTML.
+
+* I need more complicated action-handlers than just these 3, can you please make them?
+
+The code is open source and on Github on jperla/actionable.  Feel free to add your own enhancements.  Be careful because you want to keep your app simple, and, in my experience, these 3 actions comprise the vast majority of user ajax paradigms.  With a little thinking you can probably do what you want using either "form-submit" or "replace" with the right response html.
+
+Technical Documentation:
+
+
+Actionable Accepts spinner url (to an animated gif of a spinner for waits).
+Actionable sets up a live listener on divs with classes of type "actionable".
 
 Classes of type actionable contain a hidden div which has class "kwargs".
 
@@ -14,7 +48,7 @@ Here are some self-explanatory examples:
 <!-- When this button is clicked, 
     replaces content with return value of the url below.
     If you want it to be clickable multiple times,
-        just return another actionable in the response!
+        just return another actionable HTML fragment in the response!
 -->
 <div id="#money">
     <button class="actionable">
@@ -29,12 +63,14 @@ Here are some self-explanatory examples:
 </div>
 
 <!--  Submit a form via AJAX to the backend.
+        Works with any form on your website by adding a few lines, instant AJAX!
         It's never been so easy to toggle a setting!
 -->
 <button class="actionable" id="#sethappy">
     Set happy
     <div class="kwargs">
         <form method="GET" action="/user/set/happiness/1">
+            <!-- unmodified existing form! -->
             <input name="user" value="18489123" />
             <input name="happiness" value="100" />
             <input name="clicked" value="YES" />
@@ -68,6 +104,9 @@ Here are some self-explanatory examples:
 <!-- This is the same as above, 
         but will allow hiding the comment again 
         by clicking the same button.
+
+    The content is lazy loaded once and saved to achieve speed,
+        optimality.
 -->
 <div>
     <div class="actionable">
@@ -85,7 +124,7 @@ Here are some self-explanatory examples:
 
 
 
-It fails loudly if misconfigured.  It is easy to do everything right and it is easy for you to write a complex ajax website with no extra javascript code.
+It fails loudly if misconfigured. It's hard to write buggy code and not notice in quick testing. It is easy to do everything right and it is easy for you to write a complex ajax website with no extra javascript code.
 
 
 Full arguments are below:
@@ -101,14 +140,14 @@ Arguments:
   target: CSS3 selector of element on page to update
 
   target-type: absolute, parent, sibling, closest, or child-of
-                Absolute just executes the target selector.
+                Absolute just executes the target selector in jQuery.
                 Parent executes target selector on jQuery.parents().
                 Sibling the same on siblings.
                 Closest looks at children and children of children and so on.
                 child-of looks at target's children
 
-  closest: used in combination with target-type:child-of to get target's children
-  form: used in combination with type:submit-form to find the form
+  closest: selector used in combination with target-type:child-of to get target's children
+  form: selector used in combination with type:submit-form to find the form
 
 If you use the open-close type, then the actionable can have two child divs with classes "when-open" and "when-closed".  Fill when-open with what the actionable looks like when the target is toggled open (for example, a minus sign), and fill when-closed with what the it looks like when the target is toggled closed (for example, a plus sign).
 
