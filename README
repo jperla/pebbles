@@ -1,6 +1,6 @@
-Docs at http://www.jperla.com/blog/write-bug-free-javascript-with-actionable
+Docs at http://www.jperla.com/blog/write-bug-free-javascript-with-pebbles
 
-Goals of Actionable:
+Goals of Pebbles:
  * so easy that a designer could write complicated AJAX!
  * 0 lines of javascript
  * complicated ajax websites
@@ -12,11 +12,11 @@ Goals of Actionable:
 
 Plus, you don't even have to write one line of javascript!
 
-The basic idea is that almost every complicated AJAX interaction can be reduced to a handful of fundamental actions which can be composed (remind you of UNIX?). So, all a programmer has to do with this library is add few lines of HTML to elements of a page to describe the Actionable response that happens when someone clicks that element.  Maybe you submit a form, maybe you fetch some content and update part of the page.
+The basic idea is that almost every complicated AJAX interaction can be reduced to a handful of fundamental actions which can be composed (remind you of UNIX?). So, all a programmer has to do with this library is add few lines of HTML to elements of a page to describe the Pebbles response that happens when someone clicks that element.  Maybe you submit a form, maybe you fetch some content and update part of the page.
 
 Most current website write and rewrite slightly different versions of these same basic patterns in javascript. This separates the HTML which has information about AJAX interactions and the Javascript which has other information.
 
-Javascript can be tricky to write even for an experience programmer.  Moreover, a lot of this stuff is repeated, and it shouldn't be. Actionable brings more of a descriptive style programming (a la Haskell, Prolog) to the web in the simplest of ways.
+Javascript can be tricky to write even for an experience programmer.  Moreover, a lot of this stuff is repeated, and it shouldn't be. Pebbles brings more of a descriptive style programming (a la Haskell, Prolog) to the web in the simplest of ways.
 
 
 FAQ:
@@ -29,13 +29,13 @@ Moreover, it's easier to auto-generate correct readable html (e.g. from Django t
 
 * I need more complicated action-handlers than just these 3, can you please make them?
 
-The code is open source and on Github on jperla/actionable.  Feel free to add your own enhancements.  Be careful because you want to keep your app simple, and, in my experience, these 3 actions comprise the vast majority of user ajax paradigms.  With a little thinking you can probably do what you want using either "form-submit" or "replace" with the right response html.
+The code is open source and on Github on jperla/pebbles.  Feel free to add your own enhancements.  Be careful because you want to keep your app simple, and, in my experience, these 3 actions comprise the vast majority of user ajax paradigms.  With a little thinking you can probably do what you want using either "form-submit" or "replace" with the right response html.
 
 Technical Documentation:
 
 
-Actionable Accepts spinner url (to an animated gif of a spinner for waits).
-Actionable sets up a live listener on divs with classes of type "actionable".
+Pebbles accepts spinner url (to an animated gif of a spinner for waits).
+Pebbles sets up a live listener on divs with classes of type "actionable".
 
 Classes of type actionable contain a hidden div which has class "kwargs".
 
