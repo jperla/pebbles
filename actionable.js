@@ -1,3 +1,5 @@
+actionable = {};
+
 actionable.utils = function() {
   var wait = function(time, f) {
     setTimeout(f, time);
@@ -162,7 +164,7 @@ actionable.ajax = function(spinner) {
   var target_from_kwargs = function(button, kwargs) {
     var target = null;
     if(!kwargs['target-type']) {
-        kwargs['target-type'] == 'absolute';
+        kwargs['target-type'] = 'absolute';
     }
     if(kwargs['target-type'] == 'absolute') {
         target = jQuery(kwargs['target']);
@@ -178,6 +180,7 @@ actionable.ajax = function(spinner) {
     } else {
         throw 'No known target type: ' + kwargs['target-type'];
     }
+
     if(target.length == 0) {
         throw 'No target found for selector: ' + kwargs['target-type'] + kwargs['target'];
     } else if(target.length > 1) {
