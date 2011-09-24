@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>actionable</title>
+    <link rel="stylesheet" href="qunit.css" />
+</head>
+ 
+<body>
+    <h1 id="qunit-header">actionable</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+        <div class="open-close">
+            <div class="actionable">
+                <div class="when-closed">show full comment</div>
+                <div class="when-open">hide</div>
+                <div class="kwargs">
+                    <input name="type" value="open-close" />
+                    <input name="target" value="#long-comment" />
+                    <input name="url" value="longcomment.html" />
+                </div>
+            </div>
+            <div id="long-comment" style="display: none;"></div>
+        </div> 
+
+        <div class="submit-form">
+            <div id="sethappy">
+                <button class="actionable">
+                    Set happy
+                    <div class="kwargs">
+                        <form method="GET" action="happy.html">
+                            <input name="user" value="18489123" />
+                            <input name="happiness" value="100" />
+                            <input name="clicked" value="YES" />
+                        </form>
+
+                        <!-- submit form and replace target with response-->
+                        <input name="type" value="submit-form" />
+                        <input name="target" value="#sethappy" />
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="replace">
+            <div id="money">
+                <button class="actionable">
+                    Show me the money!
+                    <div class="kwargs">
+                        <!-- replace money with /user/3/money/create -->
+                        <input name="type" value="replace" />
+                        <input name="target" value="#money" />
+                        <input name="url" value="money.html" />
+                    </div>
+                </button>
+            </div>
+        </div>
+
+    <script src="jquery-1.6.4.min.js"></script>
+    <script src="../pebbles.js"></script>
+    <script src="qunit.js"></script>
+    <script src="test.js"></script>
+</body>
+</html>
