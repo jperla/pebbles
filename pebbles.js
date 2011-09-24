@@ -107,13 +107,13 @@ pebbles.ajax = function(spinner) {
     if(kwargs['form']) {
         var form = jQuery(kwargs['form']);
     } else {
-        var form = button.closest('form');
+        var form = button.find('form');
     }
     pebbles.utils.assert(form.length == 1, 'No form found in button');
     var method = form.attr('method');
     var url = form.attr('action');
     pebbles.utils.assert(url !== '', 'Form submit URL is not blank');
-    var data = form.formSerialize();
+    var data = form.serialize();
     pebbles.utils.assert(data !== '', 'Form should send some data');
     button.html('<img src="' + spinner + '" />');
     jQuery.ajax({url: url,
@@ -131,29 +131,25 @@ pebbles.ajax = function(spinner) {
         return act_on_opener_closer(button, kwargs);
     } else if(kwargs['type'] == 'submit-form') {
         return act_on_form_submitter(button, kwargs);
-    } else if(kwargs['type'] == 'replace')
-        return always_replace_target_with_url(e);
+    } else if(kwargs['type'] == 'replace') {
+        return always_replace_target_with_url(button, kwargs);
     } else {
         throw 'No known kwargs type';
     }
   };
 
-  var always_replace_target_with_url = function(e) {
-    var button = jQuery(this);
-    var target_selector = button.children("input[name='target']").eq(0).val();
-    var target = jQuery(target_selector);
-    pebbles.utils.assert(target.length > 0, 'Did not find a target with selector: ' + target_selector);
-    var url = button.children("input[name='url']").eq(0).val();
+  var always_replace_target_with_url = function(button, kwargs) {
+    var target = target_from_kwargs(button, kwargs);
+
     target.hide();
     pebbles.utils.flush(function() {
-        jQuery.ajax({url: url,
+        jQuery.ajax({url: kwargs['url'],
             success: generate_replace_and_show(target) });
     });
     return false;
   };
 
   return {
-    always_replace_target_with_url: always_replace_target_with_url,
     action: action
   };
 }();
