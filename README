@@ -50,7 +50,7 @@ Here are some self-explanatory examples:
     If you want it to be clickable multiple times,
         just return another actionable HTML fragment in the response!
 -->
-<div id="#money">
+<div id="money">
     <button class="actionable">
         Show me the money!
         <div class="kwargs">
@@ -66,7 +66,7 @@ Here are some self-explanatory examples:
         Works with any form on your website by adding a few lines, instant AJAX!
         It's never been so easy to toggle a setting!
 -->
-<button class="actionable" id="#sethappy">
+<button class="actionable" id="sethappy">
     Set happy
     <div class="kwargs">
         <form method="GET" action="/user/set/happiness/1">
@@ -97,7 +97,7 @@ Here are some self-explanatory examples:
             <input name="url" value="/comment/get/3" />
         </div>
     </div>
-    <div id="#long-comment"></div>
+    <div id="long-comment"></div>
 </div>
 
 
@@ -118,7 +118,7 @@ Here are some self-explanatory examples:
             <input name="url" value="/comment/get/3" />
         </div>
     </div>
-    <div id="#long-comment"></div>
+    <div id="long-comment"></div>
 </div>
 
 
