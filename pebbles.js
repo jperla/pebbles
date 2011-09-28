@@ -30,13 +30,8 @@ Docs at http://www.jperla.com/blog/write-bug-free-javascript-with-pebbles
 
 
 pebbles.ajax = function(spinner) {
-  var generate_replace_and_show = function(target) {
-    var replace_and_show = function(response) {
-      target.html(response);
-      target.show();
-    };
-    return replace_and_show;
-  };
+  // Put the spinner url in the pebbles object so we can get it in our handlers
+  pebbles.spinner = spinner;
 
   var kwargs_of_action = function(button) {
     inputs = button.children('.kwargs').children('input');
@@ -78,8 +73,34 @@ pebbles.ajax = function(spinner) {
     }
   };
 
+  var action = function(e) {
+    var button = jQuery(this);
+    var kwargs = kwargs_of_action(button);
+
+    if(pebbles.handlers.hasOwnProperty(kwargs['type'])) {
+        return pebbles.handlers[kwargs['type']](button, kwargs);
+    } else {
+        throw 'No known kwargs type';
+    }
+  };
+
+  return {
+    action: action,
+    target_from_kwargs: target_from_kwargs
+  };
+}();
+
+pebbles.handlers = function () {
+  var generate_replace_and_show = function(target) {
+    var replace_and_show = function(response) {
+      target.html(response);
+      target.show();
+    };
+    return replace_and_show;
+  };
+
   var act_on_opener_closer = function(button, kwargs) {
-    var target = target_from_kwargs(button, kwargs);
+    var target = pebbles.ajax.target_from_kwargs(button, kwargs);
     if(target.css('display') != 'none') {
         button.children('.when-closed').show();
         button.children('.when-open').hide();
@@ -91,7 +112,7 @@ pebbles.ajax = function(spinner) {
         if(target.html() != "" || !url) {
             target.show();
         } else {
-            target.html('<img src="' + spinner + '" />');
+            target.html('<img src="' + pebbles.spinner + '" />');
             target.show();
             pebbles.utils.flush(function() {
                 jQuery.ajax({url: url,
@@ -103,7 +124,7 @@ pebbles.ajax = function(spinner) {
   };
 
   var act_on_form_submitter = function(button, kwargs) {
-    var target = target_from_kwargs(button, kwargs);
+    var target = pebbles.ajax.target_from_kwargs(button, kwargs);
     if(kwargs['form']) {
         var form = jQuery(kwargs['form']);
     } else {
@@ -115,7 +136,7 @@ pebbles.ajax = function(spinner) {
     pebbles.utils.assert(url !== '', 'Form submit URL is not blank');
     var data = form.serialize();
     pebbles.utils.assert(data !== '', 'Form should send some data');
-    button.html('<img src="' + spinner + '" />');
+    button.html('<img src="' + pebbles.spinner + '" />');
     jQuery.ajax({url: url,
                  method: method,
                  data: data,
@@ -123,23 +144,8 @@ pebbles.ajax = function(spinner) {
     return false;
   };
 
-  var action = function(e) {
-    var button = jQuery(this);
-    var kwargs = kwargs_of_action(button);
-    /* #TODO: jperla: better error handling */
-    if(kwargs['type'] == 'open-close') {
-        return act_on_opener_closer(button, kwargs);
-    } else if(kwargs['type'] == 'submit-form') {
-        return act_on_form_submitter(button, kwargs);
-    } else if(kwargs['type'] == 'replace') {
-        return always_replace_target_with_url(button, kwargs);
-    } else {
-        throw 'No known kwargs type';
-    }
-  };
-
   var always_replace_target_with_url = function(button, kwargs) {
-    var target = target_from_kwargs(button, kwargs);
+    var target = pebbles.ajax.target_from_kwargs(button, kwargs);
 
     target.hide();
     pebbles.utils.flush(function() {
@@ -150,7 +156,9 @@ pebbles.ajax = function(spinner) {
   };
 
   return {
-    action: action
+    'open-close': act_on_opener_closer,
+    'submit-form': act_on_form_submitter,
+    'replace': always_replace_target_with_url
   };
 }();
 
