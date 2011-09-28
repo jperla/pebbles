@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>pebbles</title>
+    <link rel="stylesheet" href="qunit.css" />
+</head>
+ 
+<body>
+    <h1 id="qunit-header">pebbles</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture">
+        <div class="open-close">
+            <div data-pebbles-actionable data-pebbles-type="open-close" data-pebbles-target="#long-comment" data-pebbles-url="longcomment.html">
+                <div class="when-closed">show full comment</div>
+                <div class="when-open">hide</div>
+            </div>
+            <div id="long-comment" style="display: none;"></div>
+        </div> 
+
+        <div class="submit-form">
+            <div id="sethappy">
+                <button data-pebbles-actionable data-pebbles-type="submit-form" data-pebbles-target="#sethappy">
+                    Set happy
+                    <form method="GET" action="happy.html" style="display:none;">
+                        <input name="user" value="18489123" />
+                        <input name="happiness" value="100" />
+                        <input name="clicked" value="YES" />
+                    </form>
+                </button>
+            </div>
+        </div>
+
+        <div class="replace">
+            <div id="money">
+                <button data-pebbles-actionable data-pebbles-type="replace" data-pebbles-target="#money" data-pebbles-url="money.html">
+                    Show me the money!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery-1.6.4.min.js"></script>
+    <script src="../pebbles.js"></script>
+    <script src="qunit.js"></script>
+    <script src="test2.js"></script>
+</body>
+</html>
