@@ -33,7 +33,7 @@ asyncTest('submit', 3, function () {
 
     pebbles.utils.wait(100, function () {
         ok($('#sethappy').children('.actionable').length === 0, '.actionable button was replaced');
-        ok($('#sethappy').children('p').length === 1, '#money div contents were replaced correctly');
+        ok($('#sethappy').children('p').length === 1, '#sethappy div contents were replaced correctly');
 
         start();
     });
