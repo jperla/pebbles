@@ -1,7 +1,7 @@
 module('open-close');
 
 asyncTest('open', 6, function () {
-    var button = $('.open-close .actionable');
+    var button = $('.open-close [data-pebbles-actionable]');
 
     ok($('#long-comment').html() === '', '#long-comment div starts empty');
 
@@ -25,14 +25,14 @@ asyncTest('open', 6, function () {
 module('submit-form');
 
 asyncTest('submit', 3, function () {
-    var button = $('.submit-form .actionable');
-    
+    var button = $('.submit-form [data-pebbles-actionable]');
+
     ok($('#sethappy').children().length === 1, '#sethappy div only contains the button');
 
     button.click();
 
     pebbles.utils.wait(100, function () {
-        ok($('#sethappy').children('.actionable').length === 0, '.actionable button was replaced');
+        ok($('#sethappy').children('[data-pebbles-actionable]').length === 0, '[data-pebbles-actionable] button was replaced');
         ok($('#sethappy').children('p').length === 1, '#sethappy div contents were replaced correctly');
 
         start();
@@ -43,14 +43,14 @@ asyncTest('submit', 3, function () {
 module('replace');
 
 asyncTest('replace', 3, function () {
-    var button = $('.replace .actionable');
+    var button = $('.replace [data-pebbles-actionable]');
     
     ok($('#money').children().length === 1, '#money div only contains the button');
 
     button.click();
 
     pebbles.utils.wait(100, function () {
-        ok($('#money').children('.actionable').length === 0, '.actionable button was replaced');
+        ok($('#money').children('[data-pebbles-actionable]').length === 0, '[data-pebbles-actionable] button was replaced');
         ok($('#money').children('pre').length === 1, '#money div contents were replaced correctly');
 
         start();
