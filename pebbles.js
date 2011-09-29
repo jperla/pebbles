@@ -34,12 +34,25 @@ pebbles.ajax = function(spinner) {
   pebbles.spinner = spinner;
 
   var kwargs_of_action = function(button) {
-    inputs = button.children('.kwargs').children('input');
     var kwargs = {};
-    for(var i=0;i<inputs.length;i++) {
-      var name = inputs.eq(i).attr('name');
-      var val = inputs.eq(i).val();
-      kwargs[name] = val;
+
+    //HTML 5 data attributes
+    if(button.is('[data-pebbles-actionable]')) {
+      var data = button.data();
+      
+      for(var k in data) {
+        if(k.indexOf('pebbles') === 0 && k !== 'pebblesActionable') {
+          kwargs[k.substr(7).toLowerCase()] = data[k];
+        }
+      }
+    } else {
+      var inputs = button.children('.kwargs').children('input');
+
+      for(var i=0;i<inputs.length;i++) {
+        var name = inputs.eq(i).attr('name');
+        var val = inputs.eq(i).val();
+        kwargs[name] = val;
+      }
     }
     return kwargs;
   };
@@ -164,7 +177,7 @@ pebbles.handlers = function () {
 
 
 jQuery(function() {
-  jQuery('.actionable').live('click', pebbles.ajax.action);
+  jQuery(this).delegate('.actionable, [data-pebbles-actionable]', 'click', pebbles.ajax.action);
 });
 
  
