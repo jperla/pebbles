@@ -19,32 +19,31 @@ Most current website write and rewrite slightly different versions of these same
 Javascript can be tricky to write even for an experience programmer.  Moreover, a lot of this stuff is repeated, and it shouldn't be. Pebbles brings more of a descriptive style programming (a la Haskell, Prolog) to the web in the simplest of ways.
 
 
-FAQ:
+#### FAQ
 
-* Couldn't you just write javascript functions that you call that do the same thing?
+##### Couldn't you just write javascript functions that you call that do the same thing?
 
 You might but then you introduce the opportunity of syntax and other programming errors, thus not achieving 0 bugs. In practice, this library is so straightforward to use that once you define a complicated action, which only takes a few seconds, you can move it around and it just always works.
 
 Moreover, it's easier to auto-generate correct readable html (e.g. from Django templates). Many of your pages won't need *any* javascript even if highly dynamic. All the custom logic is in one place rather than spread over the html and the javascript. Basically, writing javascript is harder than what amounts to a DSL in HTML.
 
-* I need more complicated action-handlers than just these 3, can you please make them?
+##### I need more complicated action-handlers than just these 3, can you please make them?
 
 The code is open source and on Github on jperla/pebbles.  Feel free to add your own enhancements.  Be careful because you want to keep your app simple, and, in my experience, these 3 actions comprise the vast majority of user ajax paradigms.  With a little thinking you can probably do what you want using either "form-submit" or "replace" with the right response html.
 
-Technical Documentation:
-
+#### Technical Documentation
 
 Pebbles accepts spinner url (to an animated gif of a spinner for waits).
-Pebbles sets up a live listener on divs with classes of type "actionable".
+Pebbles sets up a live listener on divs with classes of type `actionable`.
 
-Classes of type actionable contain a hidden div which has class "kwargs".
+Classes of type actionable contain a hidden div which has class `kwargs`.
 
-.actionable .kwargs { display: none; }
+`.actionable .kwargs { display: none; }`
 
-kwargs div contains a number of <input> html elements, each with a name and value.  The name is the key name, the value is the value for that key.  In this way, in HTML, we specify a dictionary of keyword arguments to the actionable.
+`kwargs` div contains a number of `<input>` html elements, each with a name and value.  The name is the key name, the value is the value for that key.  In this way, in HTML, we specify a dictionary of keyword arguments to the actionable.
 
 Here are some self-explanatory examples:
-
+```html
 <!-- When this button is clicked, 
     replaces content with return value of the url below.
     If you want it to be clickable multiple times,
@@ -120,15 +119,13 @@ Here are some self-explanatory examples:
     </div>
     <div id="long-comment"></div>
 </div>
-
-
-
+```
 
 It fails loudly if misconfigured. It's hard to write buggy code and not notice in quick testing. It is easy to do everything right and it is easy for you to write a complex ajax website with no extra javascript code.
 
 
-Full arguments are below:
-===========================
+#### Full list of arguments
+```
 Arguments:
   type: replace, open-close, submit-form
         replace replaces the target with the url
@@ -148,6 +145,8 @@ Arguments:
 
   closest: selector used in combination with target-type:child-of to get target's children
   form: selector used in combination with type:submit-form to find the form
+```
 
-If you use the open-close type, then the actionable can have two child divs with classes "when-open" and "when-closed".  Fill when-open with what the actionable looks like when the target is toggled open (for example, a minus sign), and fill when-closed with what the it looks like when the target is toggled closed (for example, a plus sign).
+If you use the open-close type, then the actionable can have two child divs with classes `when-open` and `when-closed`. 
+Fill when-open with what the actionable looks like when the target is toggled open (for example, a minus sign), and fill when-closed with what the it looks like when the target is toggled closed (for example, a plus sign).
 
